@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy-Preserving Federated Generative Learning for Real-Time IoT Intrusion Detection — Research Roadmap</title>
+<style>
+  :root{
+    --ink:#1b1f27; --sub:#4a5264; --line:#e3e7ee; --bg:#fbfcfe;
+    --card:#ffffff; --accent:#1d5ea8; --accent2:#0f8a6e; --warn:#b5552b;
+    --code:#f2f4f8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family: "Segoe UI", Georgia, "Iowan Old Style", serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 28px 80px;}
+  header.hero{
+    background:linear-gradient(135deg,#12233d,#1d5ea8 65%,#0f8a6e);
+    color:#fff; padding:56px 28px 44px;
+  }
+  header.hero .inner{max-width:980px; margin:0 auto;}
+  header.hero h1{font-family: "Segoe UI", Arial, sans-serif; font-size:2.1rem; margin:0 0 10px; line-height:1.25;}
+  header.hero p.tag{font-family: Arial, sans-serif; font-size:1.02rem; opacity:.92; max-width:760px; margin:0;}
+  header.hero .badges{margin-top:22px; display:flex; flex-wrap:wrap; gap:8px;}
+  header.hero .badges span{
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3);
+    padding:5px 12px; border-radius:20px; font-family:Arial, sans-serif; font-size:.8rem;
+  }
+  nav.toc{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:22px 26px; margin:-30px 0 40px; box-shadow:0 8px 24px rgba(20,30,60,.06);
+    font-family: Arial, sans-serif;
+  }
+  nav.toc h2{font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--sub); margin:0 0 12px;}
+  nav.toc ol{margin:0; padding-left:1.2em; columns:2; column-gap:30px;}
+  nav.toc li{margin-bottom:7px; font-size:.92rem;}
+  nav.toc a{color:var(--accent); text-decoration:none;}
+  nav.toc a:hover{text-decoration:underline;}
+  section{margin:52px 0;}
+  h2.section-title{
+    font-family: Arial, sans-serif; font-size:1.5rem; color:var(--accent);
+    border-bottom:3px solid var(--accent); padding-bottom:10px; margin-bottom:20px;
+    display:flex; align-items:baseline; gap:10px;
+  }
+  h2.section-title .num{
+    background:var(--accent); color:#fff; font-size:.8rem; padding:3px 10px;
+    border-radius:6px; font-family:Arial, sans-serif;
+  }
+  h3{font-family: Arial, sans-serif; color:#173a63; font-size:1.15rem; margin-top:30px;}
+  h4{font-family: Arial, sans-serif; color:#2b3245; font-size:1.0rem; margin-top:22px;}
+  p{margin:12px 0;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:20px 24px; margin:18px 0; box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  .plain{
+    background:#eef5ff; border-left:4px solid var(--accent); padding:16px 20px;
+    border-radius:0 8px 8px 0; margin:16px 0;
+  }
+  .plain b.tag{font-family:Arial, sans-serif; color:var(--accent); display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;}
+  .analogy{
+    background:#f1faf6; border-left:4px solid var(--accent2); padding:16px 20px;
+    border-radius:0 8px 8px 0; margin:16px 0;
+  }
+  .analogy b.tag{font-family:Arial, sans-serif; color:var(--accent2); display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;}
+  .warn{
+    background:#fdf2ec; border-left:4px solid var(--warn); padding:16px 20px;
+    border-radius:0 8px 8px 0; margin:16px 0;
+  }
+  .warn b.tag{font-family:Arial, sans-serif; color:var(--warn); display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;}
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.95rem;}
+  th, td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  th{background:#f3f6fb; font-family:Arial, sans-serif; font-size:.85rem; text-transform:uppercase; letter-spacing:.03em; color:var(--sub);}
+  tr:nth-child(even) td{background:#fafbfd;}
+  code, .mono{font-family:"Consolas","Menlo",monospace; background:var(--code); padding:2px 6px; border-radius:4px; font-size:.9em;}
+  pre{background:#131a26; color:#dbe6f5; padding:18px 20px; border-radius:8px; overflow-x:auto; font-size:.86rem; line-height:1.55;}
+  pre code{background:none; padding:0; color:inherit;}
+  ul, ol{padding-left:1.4em;}
+  li{margin-bottom:6px;}
+  .phase{
+    display:flex; gap:18px; border:1px solid var(--line); border-radius:10px;
+    padding:18px 22px; margin:16px 0; background:var(--card);
+  }
+  .phase .weeks{
+    flex:0 0 110px; font-family:Arial, sans-serif; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:8px; display:flex; align-items:center;
+    justify-content:center; text-align:center; font-size:.85rem; padding:8px;
+  }
+  .phase .content h4{margin-top:0;}
+  .tick{color:var(--accent2); font-weight:700;}
+  .journal-tier{font-family:Arial, sans-serif; font-weight:700; font-size:.78rem; padding:2px 10px; border-radius:12px; color:#fff;}
+  .tier-a{background:#0f8a6e;}
+  .tier-b{background:#1d5ea8;}
+  .tier-c{background:#7a7f8c;}
+  footer{
+    text-align:center; color:var(--sub); font-family:Arial, sans-serif; font-size:.82rem;
+    border-top:1px solid var(--line); padding-top:22px; margin-top:60px;
+  }
+  .backtotop{display:inline-block; margin-top:6px; font-size:.8rem;}
+  a{color:var(--accent);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <h1>Privacy-Preserving Federated Generative Learning<br>for Real-Time IoT Intrusion Detection</h1>
+    <p class="tag">A complete, beginner-friendly research roadmap: what this project is, why it matters, how to build it step by step, and — in full detail — how to build or source a dataset and privacy proof that a top-tier journal will actually accept.</p>
+    <div class="badges">
+      <span>Federated Learning</span>
+      <span>Generative Models (GAN / VAE)</span>
+      <span>Differential Privacy</span>
+      <span>IoT / IIoT Security</span>
+      <span>Real-Time Edge Inference</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#part1">What This Project Is (Plain Language)</a></li>
+    <li><a href="#part2">Core Concepts Explained From Zero</a></li>
+    <li><a href="#part3">The Gap in Current Research</a></li>
+    <li><a href="#part4">What We Are Proposing</a></li>
+    <li><a href="#part5">Who Does What / Team Roles</a></li>
+    <li><a href="#part6">Step-by-Step Roadmap (Phases &amp; Weeks)</a></li>
+    <li><a href="#part7">System Architecture in Detail</a></li>
+    <li><a href="#part8">Evaluation Plan &amp; Baselines</a></li>
+    <li><a href="#part9">Target Journals &amp; Venues</a></li>
+    <li><a href="#part10">DATA — Building or Sourcing a Journal-Grade Dataset</a></li>
+    <li><a href="#part11">Risks, Ethics &amp; Mitigations</a></li>
+    <li><a href="#part12">Reading List (Foundational Papers)</a></li>
+  </ol>
+</nav>
+
+<!-- PART 1 -->
+<section id="part1">
+  <h2 class="section-title"><span class="num">1</span>What This Project Is (Plain Language)</h2>
+
+  <div class="plain">
+    <b class="tag">In one sentence</b>
+    Build an intrusion-detection system for IoT networks in which every site (home, hospital wing, factory floor, smart-city gateway) trains on its <b>own</b> traffic, never sends raw data anywhere, uses a <b>generative model</b> locally to fix the fact that attacks are rare and different at every site, and still ends up with one shared detector that is <b>fast enough to run on the edge in real time</b> and <b>provably resistant</b> to someone reconstructing private traffic from the shared model.
+  </div>
+
+  <p>Break that sentence into four separate jobs the system has to do:</p>
+  <ol>
+    <li><b>Federated collaboration</b> — many IoT sites (clients) jointly train one global intrusion-detection model without any raw packet or flow ever leaving the site where it was captured.</li>
+    <li><b>Generative augmentation</b> — inside each client, a local generative model (a GAN or VAE) learns the shape of that client's traffic and manufactures realistic synthetic minority-class (attack) samples, so every client trains on a balanced dataset even though real attacks are rare and different from site to site.</li>
+    <li><b>Formal privacy protection</b> — the model updates (and, if shared, the generator itself) are protected with differential privacy and secure aggregation, so that even a malicious server or a curious co-participant cannot reconstruct a client's raw traffic or infer whether a specific device was present.</li>
+    <li><b>Real-time edge deployment</b> — the final detector must be small and fast enough to run directly on constrained IoT gateways/edge nodes with millisecond-scale inference latency, not just accurate in an offline benchmark.</li>
+  </ol>
+
+  <div class="analogy">
+    <b class="tag">Everyday analogy</b>
+    Imagine several hospitals wanting to build one shared "flu outbreak detector" without ever emailing each other patient records. Each hospital trains locally, and because rare disease cases are scarce at any single hospital, each one also uses a small in-house simulator to generate realistic-but-fake extra rare cases so its local model doesn't just learn "everyone is healthy." Before sending anything to the shared coordinator, each hospital blurs its update with a calibrated amount of statistical noise so no one — not even the coordinator — can later work backward to a specific patient. That is exactly what this project does, except the "hospitals" are IoT gateways and the "disease" is a cyberattack.
+  </div>
+
+  <p>This sits at the intersection of four fields, which is exactly what makes it a strong, publishable, non-trivial research contribution:</p>
+  <table>
+    <tr><th>Field</th><th>What it contributes here</th></tr>
+    <tr><td>Federated Learning (FL)</td><td>Collaborative model training across distributed IoT clients without centralizing raw data, handling non-IID and heterogeneous traffic.</td></tr>
+    <tr><td>Generative Modeling</td><td>GANs/VAEs that synthesize realistic minority-class (attack) traffic locally, solving the extreme class imbalance that cripples most IDS models.</td></tr>
+    <tr><td>Privacy-Preserving ML</td><td>Differential privacy, secure aggregation, and membership-inference-resistance analysis that make the shared model legally and practically deployable across organizational/regulatory boundaries.</td></tr>
+    <tr><td>Real-Time Systems / Edge Computing</td><td>Model compression, quantization, and latency-aware architecture design so detection happens on-device, in time to actually stop an attack.</td></tr>
+  </table>
+</section>
+
+<!-- PART 2 -->
+<section id="part2">
+  <h2 class="section-title"><span class="num">2</span>Core Concepts Explained From Zero</h2>
+  <p>No prior knowledge assumed. Read this section fully before touching any code.</p>
+
+  <h3>2.1 What is Federated Learning (FL)?</h3>
+  <div class="plain">
+    <b class="tag">Definition</b>
+    FL is a way of training one shared model across many devices/sites that each hold their own private data. Instead of moving data to a central server, the <b>model</b> travels: each client downloads the current global model, trains it a little on its own local data, and sends back only the <b>updated model weights</b> (or gradients) — never the raw data. A server averages these updates (classically via <span class="mono">FedAvg</span>) to produce the next global model, and the cycle repeats over many "rounds."
+  </div>
+  <div class="analogy">
+    <b class="tag">Analogy</b>
+    Picture a group of students each solving the same practice exam privately at home, then mailing in only their <i>answer-adjustment notes</i> ("I got better at algebra, worse at geometry") rather than their actual homework. A tutor combines everyone's notes into one improved study guide and sends it back out. No student ever sees another's homework, yet the shared guide improves for everyone.
+  </div>
+
+  <h3>2.2 What is a generative model, and why does IoT-IDS need one?</h3>
+  <div class="plain">
+    <b class="tag">Definition</b>
+    A generative model (here, a <b>GAN</b> — Generative Adversarial Network — or a <b>VAE</b> — Variational Autoencoder) learns the underlying statistical distribution of a dataset well enough to produce new, synthetic samples that look like they came from that distribution. A GAN pits a <i>generator</i> (which fabricates samples) against a <i>discriminator</i> (which tries to tell real from fake) until the generator's output is indistinguishable from real data. A VAE instead learns a compressed probabilistic "latent space" it can sample from to reconstruct plausible new data points.
+  </div>
+  <p>In IoT intrusion detection, attack traffic is a tiny fraction of all traffic (often well under 5%), and the attack types present differ wildly from one site to another (a smart-home gateway sees different threats than a factory PLC network). A local generative model lets each client <b>manufacture extra, realistic minority-class samples</b> from the few real attack examples it has, so its local classifier does not simply learn to always predict "benign."</p>
+
+  <h3>2.3 What is Differential Privacy (DP)?</h3>
+  <div class="plain">
+    <b class="tag">Definition</b>
+    Differential privacy is a mathematical guarantee that the presence or absence of any single data point (e.g., one device's traffic record) in a dataset changes the probability of any output by at most a bounded, quantifiable amount (controlled by a parameter <span class="mono">ε</span>, "epsilon" — smaller ε means stronger privacy). In deep learning this is usually implemented as <b>DP-SGD</b>: clip each per-example gradient to a bounded norm, then add calibrated Gaussian noise before the update is used.
+  </div>
+  <div class="analogy">
+    <b class="tag">Analogy</b>
+    Imagine a survey that asks "did you jaywalk this year?" but instructs each respondent to first flip a coin: heads, answer truthfully; tails, answer randomly. Any individual answer is now deniable, yet the aggregate statistics across thousands of respondents still reveal the true jaywalking rate fairly accurately. DP-SGD does the analogous thing to gradients instead of survey answers.
+  </div>
+
+  <h3>2.4 What is Secure Aggregation?</h3>
+  <p>Secure aggregation is a cryptographic protocol (typically based on pairwise masking / secret sharing) that lets a server compute the <i>sum</i> or <i>average</i> of many clients' model updates <b>without ever seeing any individual client's update in the clear</b> — the server only ever sees the aggregate. Combined with DP, this defends against both an honest-but-curious server (secure aggregation) and an adversary who has access to the final aggregate (DP).</p>
+
+  <h3>2.5 Why "real-time" is a separate, non-trivial requirement</h3>
+  <p>Most published FL-IDS papers report accuracy/F1 on a held-out test split and stop there. A model that is 99% accurate but takes 400ms per inference and 300MB of RAM is unusable on a Raspberry-Pi-class IoT gateway that has to classify tens of thousands of flows per second. This project treats <b>inference latency, model size, and energy/CPU footprint on representative edge hardware</b> as first-class, reported metrics — not an afterthought — which is exactly the kind of rigor that separates a "toy" federated IDS paper from a publishable systems contribution.</p>
+
+  <h3>2.6 Key attack surfaces this design must defend against</h3>
+  <table>
+    <tr><th>Attack</th><th>What it means here</th></tr>
+    <tr><td>Membership inference attack</td><td>An adversary tries to determine whether a specific traffic record was part of a client's local training set, just by querying the shared model.</td></tr>
+    <tr><td>Gradient/model inversion attack</td><td>An adversary reconstructs approximate raw input samples from observed gradients/model updates.</td></tr>
+    <tr><td>Poisoning / backdoor attack</td><td>A malicious client sends crafted updates (or synthetic data from a corrupted generator) to bias the global model or plant a hidden trigger.</td></tr>
+    <tr><td>Free-riding / model-extraction attack</td><td>A client contributes little or nothing useful but still benefits from the global model, or an outsider queries the deployed model to steal it.</td></tr>
+  </table>
+</section>
+
+<!-- PART 3 -->
+<section id="part3">
+  <h2 class="section-title"><span class="num">3</span>The Gap in Current Research</h2>
+  <p>Based on the current literature (2023–2026), here is exactly where the open space is:</p>
+  <ul>
+    <li><b>Federated IDS papers and generative-augmentation IDS papers are still mostly two separate literatures.</b> A recent 2026 survey on generative AI and FL for intrusion detection explicitly frames the combination as an emerging direction rather than a settled one, and most existing generative-augmentation IDS work (e.g., FEDGAN-IDS-style approaches) evaluates class-imbalance gains without also formally analyzing what the generative step costs in privacy terms.</li>
+    <li><b>Most FL-IDS privacy work stops at "we used FedAvg,"</b> which by itself gives no formal guarantee — recent surveys note that differential privacy and secure aggregation are still applied inconsistently, and rarely with a stated, justified ε budget, in FL-IDS papers.</li>
+    <li><b>Non-IID / class-imbalance handling and formal privacy are usually studied in isolation.</b> Papers that add synthetic-data generation to fix imbalance (e.g., CGFL-style frameworks) typically do not also add DP-SGD or secure aggregation; papers that add DP typically use plain oversampling, not learned generative augmentation. Nobody has systematically measured the <i>trade-off surface</i> between synthetic-data utility and formal privacy budget in one unified FL-IDS pipeline.</li>
+    <li><b>Real-time / edge feasibility is rarely reported quantitatively.</b> Detection accuracy dominates the evaluation sections of this literature; on-device latency, memory footprint, and communication overhead per FL round are inconsistently reported or omitted, even though they are exactly what a practitioner needs to know before deploying on real gateways.</li>
+    <li><b>Privacy leakage from the generative component itself is almost never evaluated.</b> A local GAN/VAE, if shared or partially exposed, is itself a plausible attack surface (a generator can memorize and regurgitate rare training samples) — very few FL-IDS papers run a membership-inference or reconstruction-attack evaluation specifically against the generative module.</li>
+  </ul>
+  <div class="warn">
+    <b class="tag">Why this matters for publishability</b>
+    A reviewer at a serious venue will ask "what's new here?" The honest, defensible answer is: <i>(a)</i> a single pipeline that couples federated generative augmentation with formally accounted differential privacy and secure aggregation rather than treating them separately, <i>(b)</i> a quantified privacy–utility–imbalance trade-off analysis unique to this combination, <i>(c)</i> an explicit membership-inference/reconstruction audit of the generative module itself (not just the classifier), and <i>(d)</i> a real edge-hardware latency/footprint evaluation, not just offline accuracy. Each is a legitimate, scoped contribution on its own — together they make a strong systems + privacy paper.
+  </div>
+</section>
+
+<!-- PART 4 -->
+<section id="part4">
+  <h2 class="section-title"><span class="num">4</span>What We Are Proposing</h2>
+  <div class="card">
+    <h4>Working title</h4>
+    <p><i>"FedGen-IDS: Privacy-Preserving Federated Generative Learning for Real-Time Intrusion Detection in Resource-Constrained IoT Networks"</i> (working title — refine once results are in.)</p>
+  </div>
+  <p>Concretely, the system has three stacked components:</p>
+  <ol>
+    <li><b>Local Generative Augmentation Module.</b> Each client trains a lightweight conditional generative model (a conditional GAN or a Wasserstein-GAN-GP variant, with a CVAE as a lower-cost alternative) on its own local traffic to synthesize additional minority-class (attack) samples, producing a locally class-balanced training set without ever exporting real samples.</li>
+    <li><b>Privacy-Accounted Federated Training Layer.</b> Local classifier (and, optionally, generator) updates are trained with DP-SGD (per-example gradient clipping + calibrated Gaussian noise, tracked with a Rényi-DP or PRV privacy accountant so a single, justified end-to-end ε is reportable) and transmitted through a secure-aggregation protocol so the coordinating server only ever observes the aggregate update, never any individual client's contribution.</li>
+    <li><b>Compressed Real-Time Detector.</b> The globally aggregated classifier is distilled/pruned/quantized into a compact edge-deployable model (e.g., an INT8-quantized lightweight CNN, GRU, or 1D-temporal model) benchmarked for inference latency, memory footprint, and energy draw on representative constrained hardware (Raspberry Pi-class SBC or a microcontroller-class NPU), so results describe a deployable system, not only an offline classifier.</li>
+  </ol>
+  <div class="plain">
+    <b class="tag">The one-sentence pitch for your abstract</b>
+    "We introduce FedGen-IDS, a federated intrusion-detection framework that couples local generative data augmentation with formally accounted differential privacy and secure aggregation to address the joint problem of severe class imbalance, cross-site data heterogeneity, and privacy leakage in IoT networks, and we show — through an explicit privacy-utility trade-off study and a real-hardware latency evaluation — that this combination reaches near-centralized detection accuracy under a bounded, reportable privacy budget while remaining deployable in real time on constrained edge devices."
+  </div>
+</section>
+
+<!-- PART 5 -->
+<section id="part5">
+  <h2 class="section-title"><span class="num">5</span>Who Does What / Team Roles</h2>
+  <p>If working solo, treat these as sequential hats you wear. If collaborating, these are natural role splits.</p>
+  <table>
+    <tr><th>Role</th><th>Responsibility</th></tr>
+    <tr><td>Data / IoT-testbed lead</td><td>Sources, profiles, and partitions the IoT datasets into non-IID client shards; builds the FL data-partitioning simulator (Part 10).</td></tr>
+    <tr><td>FL systems engineer</td><td>Implements the federated training loop (FedAvg and at least one advanced aggregator), client-server communication, and secure aggregation.</td></tr>
+    <tr><td>Generative-modeling researcher</td><td>Designs and tunes the local conditional GAN/VAE, evaluates synthetic-sample fidelity, and integrates it into local training.</td></tr>
+    <tr><td>Privacy/security researcher</td><td>Implements DP-SGD and the privacy accountant, runs membership-inference and gradient-inversion audits, tunes the privacy–utility trade-off.</td></tr>
+    <tr><td>Edge/systems engineer</td><td>Handles model compression, quantization, and the on-device latency/energy benchmarking on target hardware.</td></tr>
+    <tr><td>Evaluation/Writing lead</td><td>Runs baselines, statistical tests, ablations; drafts the manuscript and rebuttal responses.</td></tr>
+    <tr><td>(Optional) Security/compliance advisor</td><td>An industrial-security or data-protection professional who can sanity-check attack realism and privacy claims — strongly increases credibility with reviewers.</td></tr>
+  </table>
+</section>
+
+<!-- PART 6 -->
+<section id="part6">
+  <h2 class="section-title"><span class="num">6</span>Step-by-Step Roadmap (Phases &amp; Weeks)</h2>
+  <p>A realistic timeline for a publication-ready result is <b>8–10 months</b>. Adjust pace to your availability; do not skip Phase 0.</p>
+
+  <div class="phase">
+    <div class="weeks">Weeks 1–3<br>Phase 0</div>
+    <div class="content">
+      <h4>Literature grounding &amp; scoping</h4>
+      <ul>
+        <li>Read the foundational papers in Part 12 in this order: FL basics → FedAvg/non-IID → DP-SGD → GAN/VAE basics → generative-augmentation-for-IDS papers → recent 2025–2026 FL-IDS and Gen-AI-for-IDS surveys.</li>
+        <li>Write a 2-page "gap statement" (this becomes your Introduction's contribution paragraph later).</li>
+        <li>Pick your target journal tier now (Part 9) — it determines how rigorous your privacy accounting and hardware evaluation need to be.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="weeks">Weeks 4–9<br>Phase 1</div>
+    <div class="content">
+      <h4>Data acquisition &amp; federated partitioning</h4>
+      <ul>
+        <li>Download and profile the public IoT-IDS datasets (CICIoT2023, Edge-IIoTset, TON_IoT, BoT-IoT, N-BaIoT, RT-IoT2022) — see Part 10 in full before starting this.</li>
+        <li>Build a non-IID client partitioner (e.g., Dirichlet-distribution label skew, or a natural per-device-type split) so your FL setup reflects realistic cross-site heterogeneity, not an artificially IID shuffle.</li>
+        <li>Freeze a train/validation/test split with strict temporal separation per client (never let future traffic leak into training).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="weeks">Weeks 10–16<br>Phase 2</div>
+    <div class="content">
+      <h4>Local generative augmentation module</h4>
+      <ul>
+        <li>Baseline first: classic oversampling (SMOTE) and class-weighted loss on a centralized version of one dataset. This is your sanity-check floor.</li>
+        <li>Implement the conditional GAN (or CGAN/WGAN-GP) and a CVAE alternative for local minority-class synthesis; evaluate synthetic-sample fidelity (e.g., via a held-out real-vs-synthetic classifier and feature-distribution distance metrics) before trusting it downstream.</li>
+        <li>Integrate the generator into each client's local training loop and confirm local classifier improvement on minority attack classes before moving to FL.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="weeks">Weeks 17–24<br>Phase 3</div>
+    <div class="content">
+      <h4>Federated training + differential privacy + secure aggregation</h4>
+      <ul>
+        <li>Implement plain FedAvg first as a reproducibility checkpoint (replicate a known baseline on a public benchmark before adding privacy mechanisms).</li>
+        <li>Add DP-SGD (per-example clipping + Gaussian noise) with a privacy accountant (Opacus / TensorFlow Privacy) so you can report a single, justified end-to-end ε for a given δ.</li>
+        <li>Add secure aggregation (or simulate it faithfully) so the server only observes the aggregate; document exactly which threat model this defends against and which it does not.</li>
+        <li>Sweep the privacy budget ε against detection accuracy and synthetic-augmentation utility — this sweep is your core novel trade-off result.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="weeks">Weeks 25–29<br>Phase 4</div>
+    <div class="content">
+      <h4>Compression, real-time deployment &amp; evaluation</h4>
+      <ul>
+        <li>Distill/prune/quantize the global model; benchmark inference latency, memory footprint, and (if feasible) energy draw on representative constrained hardware (Raspberry Pi-class device or an equivalent NPU/MCU simulator).</li>
+        <li>Run membership-inference and gradient-inversion attacks against both the classifier and the generative module to empirically validate the DP guarantee, not just state it theoretically.</li>
+        <li>Run statistical significance tests (paired t-test or Wilcoxon) across multiple random seeds and multiple client-partition seeds — top journals will ask for this if you report averages without variance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="weeks">Weeks 30–36<br>Phase 5</div>
+    <div class="content">
+      <h4>Writing, internal review &amp; submission</h4>
+      <ul>
+        <li>Draft in this order: Methods → Experiments/Results → Related Work → Introduction → Abstract (write the abstract last, it summarizes everything else).</li>
+        <li>Have at least one person outside the project read the draft cold — if they can't restate your contribution in one sentence, revise the Introduction.</li>
+        <li>Prepare a reproducibility package: code repo, exact dataset versions/splits, privacy-accountant configuration, environment file, README with one-command reproduction of headline results. Top journals increasingly require or strongly reward this.</li>
+        <li>Pick 2–3 target journals in ranked order (Part 9) and format accordingly before first submission.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PART 7 -->
+<section id="part7">
+  <h2 class="section-title"><span class="num">7</span>System Architecture in Detail</h2>
+  <h3>7.1 High-level pipeline</h3>
+  <pre><code>Per-client raw IoT traffic (never leaves the client)
+      │
+      ▼
+Local preprocessing  (flow extraction, feature normalization,
+                       per-device / per-protocol feature engineering)
+      │
+      ▼
+Local Generative Augmentation Module
+   ├─ Conditional GAN / CVAE trained on local minority (attack) classes
+   ├─ Synthetic-sample fidelity check (real-vs-synthetic discriminator, MMD/FID-style score)
+   └─ Locally class-balanced training set
+      │
+      ▼
+Local Classifier Training  (DP-SGD: per-example clip + calibrated noise)
+      │
+      ▼
+Secure Aggregation  (server sees only the masked/aggregated sum of updates)
+      │
+      ▼
+Global Model Update  (FedAvg or an advanced aggregator, e.g. FedProx / FedOpt)
+      │
+      ▼
+Compression  (pruning + quantization + knowledge distillation)
+      │
+      ▼
+Edge-deployed Real-Time Detector  (millisecond-scale inference on the IoT gateway)
+      │
+      ▼
+Privacy Audit Loop  (membership-inference / gradient-inversion attacks
+                      run periodically against classifier + generator)
+</code></pre>
+
+  <h3>7.2 Suggested tooling</h3>
+  <table>
+    <tr><th>Component</th><th>Recommended tools</th></tr>
+    <tr><td>Deep learning framework</td><td>PyTorch or TensorFlow/Keras</td></tr>
+    <tr><td>Federated learning framework</td><td>Flower (framework-agnostic, widely used in recent FL-IDS papers) or TensorFlow Federated</td></tr>
+    <tr><td>Differential privacy</td><td>Opacus (PyTorch) or TensorFlow Privacy, for DP-SGD and privacy accounting</td></tr>
+    <tr><td>Secure aggregation</td><td>Flower's built-in secure-aggregation extensions, or a custom pairwise-masking implementation for full control over the threat model</td></tr>
+    <tr><td>Generative models</td><td>Custom CGAN/WGAN-GP or CVAE implemented in PyTorch; consider CTGAN/TVAE from the Synthetic Data Vault as a tabular-data-specific starting point</td></tr>
+    <tr><td>Compression / edge deployment</td><td>PyTorch quantization + pruning APIs, ONNX Runtime, or TensorFlow Lite for on-device inference</td></tr>
+    <tr><td>Privacy attacks (for auditing)</td><td>ML Privacy Meter or a custom shadow-model membership-inference implementation</td></tr>
+    <tr><td>Target hardware for latency benchmarking</td><td>Raspberry Pi 4/5-class SBC, or an equivalent Cortex-A/NPU edge board, to keep results reproducible and citable</td></tr>
+  </table>
+
+  <h3>7.3 What "real-time" concretely means for the evaluation</h3>
+  <p>Define and report a concrete latency budget up front (e.g., per-flow classification must complete within a stated millisecond bound consistent with the target deployment, such as inline gateway filtering vs. near-real-time batch triage) rather than using "real-time" as an unquantified adjective — reviewers in this subfield will ask for exact numbers on stated hardware.</p>
+</section>
+
+<!-- PART 8 -->
+<section id="part8">
+  <h2 class="section-title"><span class="num">8</span>Evaluation Plan &amp; Baselines</h2>
+  <h3>8.1 Detection baselines to compare against</h3>
+  <ul>
+    <li>Centralized (non-federated) classifier trained on pooled data — your accuracy "ceiling" reference point.</li>
+    <li>Plain FedAvg with no generative augmentation and no privacy mechanism — isolates the benefit of each added component.</li>
+    <li>FedAvg + classic oversampling (SMOTE) instead of a learned generator — isolates the benefit of the generative module specifically.</li>
+    <li>FedAvg + DP-SGD with no generative augmentation — isolates the accuracy cost of privacy alone.</li>
+    <li>A published FL-IDS or generative-augmentation-IDS model reimplemented from a recent paper, if code is available — strengthens comparability.</li>
+  </ul>
+  <h3>8.2 Privacy-attack baselines to audit against</h3>
+  <ul>
+    <li>Shadow-model membership-inference attack against the final classifier.</li>
+    <li>Gradient-inversion / reconstruction attack against intermediate local updates (with and without DP-SGD active).</li>
+    <li>Membership-inference attack specifically targeting the generative module (checking whether it has memorized rare real attack samples).</li>
+  </ul>
+  <h3>8.3 Metrics checklist</h3>
+  <table>
+    <tr><th>Category</th><th>Metric</th><th>Why it's required</th></tr>
+    <tr><td>Detection</td><td>AUPRC, AUROC, macro-F1, per-class recall (especially minority attack classes)</td><td>Class imbalance (often &lt;5% attack traffic) makes plain accuracy meaningless.</td></tr>
+    <tr><td>Synthetic-data quality</td><td>Real-vs-synthetic discriminator accuracy, feature-distribution distance (e.g., MMD)</td><td>Proves the generative augmentation is realistic, not decorative noise that could mislead the classifier.</td></tr>
+    <tr><td>Privacy</td><td>Reported (ε, δ) budget; empirical membership-inference attack success rate (AUC close to 0.5 is desirable)</td><td>Turns "privacy-preserving" from a marketing phrase into a measurable, falsifiable claim.</td></tr>
+    <tr><td>Communication efficiency</td><td>Bytes transmitted per client per round; total rounds to convergence</td><td>FL's practicality hinges on communication cost, especially for bandwidth-constrained IoT links.</td></tr>
+    <tr><td>Real-time feasibility</td><td>Per-sample inference latency, model size, peak memory, (optionally) energy per inference on target hardware</td><td>Distinguishes a deployable system from an offline benchmark exercise.</td></tr>
+    <tr><td>Robustness</td><td>Variance across ≥5 random seeds and ≥3 non-IID partition seeds; performance under a poisoned/malicious-client scenario</td><td>Expected at top venues; single-run numbers are routinely rejected.</td></tr>
+  </table>
+</section>
+
+<!-- PART 9 -->
+<section id="part9">
+  <h2 class="section-title"><span class="num">9</span>Target Journals &amp; Venues</h2>
+  <p>Rank realistically. It is far better to publish a rigorous paper in a solid venue than to spend two years chasing a top-tier rejection with no fallback.</p>
+  <table>
+    <tr><th>Venue</th><th>Tier</th><th>Fit notes</th></tr>
+    <tr><td>IEEE Internet of Things Journal</td><td><span class="journal-tier tier-a">Top</span></td><td>Direct topical fit for IoT-specific FL + security work; expects strong systems evaluation including deployment feasibility.</td></tr>
+    <tr><td>IEEE Transactions on Information Forensics and Security (TIFS)</td><td><span class="journal-tier tier-a">Top</span></td><td>Strong fit if the privacy/security contribution (DP accounting, attack audits) is emphasized as the primary novelty.</td></tr>
+    <tr><td>IEEE Transactions on Dependable and Secure Computing (TDSC)</td><td><span class="journal-tier tier-a">Top</span></td><td>Good fit for the secure-aggregation and threat-model rigor angle.</td></tr>
+    <tr><td>Journal of Network and Computer Applications (Elsevier)</td><td><span class="journal-tier tier-b">Strong / applied</span></td><td>Frequently publishes FL-IDS and IoT-security systems papers; values practical evaluation and clear deployment relevance.</td></tr>
+    <tr><td>Computer Networks (Elsevier)</td><td><span class="journal-tier tier-b">Strong / applied</span></td><td>Good fit if network/communication-overhead analysis is foregrounded alongside detection results.</td></tr>
+    <tr><td>Future Generation Computer Systems (Elsevier)</td><td><span class="journal-tier tier-b">Strong / applied</span></td><td>Regularly publishes federated/edge-AI systems work; realistic first-choice target.</td></tr>
+    <tr><td>Computers &amp; Security (Elsevier)</td><td><span class="journal-tier tier-b">Strong / applied</span></td><td>Good fit for the privacy-attack-audit component specifically.</td></tr>
+    <tr><td>IEEE Access</td><td><span class="journal-tier tier-b">Solid, fast review</span></td><td>Broad scope, faster turnaround; good fallback or for an early version of the work.</td></tr>
+    <tr><td>NeurIPS / AAAI / IEEE conferences (e.g., FL, Security, IoT workshops)</td><td><span class="journal-tier tier-c">Conference/workshop</span></td><td>Excellent for getting early feedback and a citable preprint before the full journal submission.</td></tr>
+  </table>
+  <div class="warn">
+    <b class="tag">Practical tip</b>
+    Post a preprint to arXiv (cs.CR / cs.LG / cs.DC categories) once your method section is stable. It timestamps your contribution, invites early feedback, and is expected practice in this field — it does not block journal submission at any of the venues above.
+  </div>
+</section>
+
+<!-- PART 10: DATA -->
+<section id="part10">
+  <h2 class="section-title"><span class="num">10</span>DATA — Building or Sourcing a Journal-Grade Dataset</h2>
+  <p>This is the part that makes or breaks acceptance at a top journal. Reviewers in this specific subfield reject papers most often for three reasons: <b>(1)</b> evaluating "federated" learning on an artificially IID random shuffle of a single dataset instead of a realistic non-IID client partition, <b>(2)</b> reporting a privacy mechanism with no stated (ε, δ) budget or accountant, and <b>(3)</b> using only one dataset with no cross-dataset generalization check. Follow this section carefully.</p>
+
+  <h3>10.1 Why you can't just "use a real company's IoT traffic"</h3>
+  <div class="plain">
+    <b class="tag">Reality check</b>
+    Real IoT network traffic from a company or hospital is typically confidential (trade-secret concerns, GDPR/data-protection law, sector-specific regulation), and even where access exists, publishing raw traffic publicly is almost never permitted. This is exactly why the field runs on public benchmark datasets — and reviewers know this, so they will not penalize you for using them <i>as long as you are transparent about it and address the limitation explicitly</i>. It is also precisely the argument for why your federated + privacy-preserving design matters in the first place.
+  </div>
+
+  <h3>10.2 The core public datasets — use two or more together</h3>
+  <table>
+    <tr><th>Dataset</th><th>What it is</th><th>Scale</th><th>Good for</th><th>How to get it</th></tr>
+    <tr><td><b>CICIoT2023</b></td><td>Large-scale real IoT attack dataset from a 105-device topology, 33 attacks across 7 categories (DDoS, DoS, Recon, Web-based, Brute Force, Spoofing, Mirai)</td><td>~46.7M flow records, 47 features</td><td>Primary large-scale benchmark; realistic device diversity for non-IID client partitioning</td><td>Canadian Institute for Cybersecurity (CIC) dataset portal</td></tr>
+    <tr><td><b>Edge-IIoTset</b></td><td>Industrial IoT/IIoT dataset from a multi-layer testbed (MQTT, Modbus, HTTP), 14 attack types in 5 categories, explicitly designed to support both centralized and federated learning</td><td>~2.2M records, 61 selected features (from 1,176 raw)</td><td>Industrial/IIoT protocol diversity; explicitly FL-oriented by design</td><td>IEEE DataPort / original paper's release (Ferrag et al., IEEE Access 2022)</td></tr>
+    <tr><td><b>TON_IoT</b></td><td>UNSW Canberra dataset integrating physical/virtual IoT devices, cloud, and telemetry; normal traffic plus nine attack categories (DoS, DDoS, ransomware, injection, etc.)</td><td>43 attributes across multiple sub-datasets (network, telemetry, OS logs)</td><td>Multi-modal (network + telemetry + host) evaluation; heterogeneous data types across clients</td><td>UNSW Canberra Cyber Range / ADFA dataset page</td></tr>
+    <tr><td><b>BoT-IoT</b></td><td>UNSW dataset focused on large-scale botnet and brute-force attacks against IoT networks</td><td>46 statistical/behavioral flow features</td><td>Botnet-specific minority-class scenarios; good stress test for the generative-augmentation module</td><td>UNSW Canberra Cyber Range dataset page</td></tr>
+    <tr><td><b>N-BaIoT</b></td><td>Device-level botnet-detection dataset (Mirai and BASHLITE/Gafgyt) captured from nine real commercial IoT devices</td><td>115 statistical features, fully numeric, per-device traces</td><td>Best source for realistic per-device (naturally non-IID) client shards</td><td>UCI Machine Learning Repository</td></tr>
+    <tr><td><b>RT-IoT2022</b></td><td>Real-time IoT dataset combining normal and attack traffic captured under realistic operating conditions</td><td>Moderate scale, curated for real-time evaluation scenarios</td><td>Useful secondary/robustness dataset specifically framed around real-time evaluation claims</td><td>UCI Machine Learning Repository</td></tr>
+  </table>
+
+  <h3>10.3 The critical step: constructing a realistic federated partition</h3>
+  <p>Almost no public dataset ships with a ready-made "client 1 / client 2 / … / client N" split. You have to construct this yourself, and you must document the construction process rigorously — this becomes a full subsection of your paper's Methods, not a footnote.</p>
+  <ol>
+    <li><b>Prefer natural partitions where they exist</b> — e.g., N-BaIoT's per-device traces map naturally onto per-client shards, and CICIoT2023's per-device-type structure can be partitioned by device category, which is more defensible than an arbitrary synthetic split.</li>
+    <li><b>Where no natural split exists, use a controlled non-IID partitioner</b> (e.g., a Dirichlet-distribution label-skew partition with a stated concentration parameter α) so you can report and vary the <i>degree</i> of heterogeneity systematically, rather than picking one arbitrary uncontrolled split.</li>
+    <li><b>Keep an explicit "attack scarcity per client" table</b> in your Methods — since a central claim of the paper is that generative augmentation helps under scarcity, you must show, per client, how few real attack samples of each type are actually available before synthesis.</li>
+    <li><b>Reserve at least one dataset entirely for cross-dataset generalization</b> (e.g., train/tune on CICIoT2023 + Edge-IIoTset, report a held-out generalization check on TON_IoT or RT-IoT2022) — this single step meaningfully increases how convincing your results are.</li>
+    <li><b>Keep strict train/val/test separation by time and by client</b> (not just random row-shuffling) — temporal and cross-client leakage are among the most common fatal flaws reviewers catch in FL-IDS papers.</li>
+  </ol>
+
+  <h3>10.4 If you want to build a fully custom federated testbed from scratch</h3>
+  <p>This is the most publication-friendly option if you have the time, because it lets you claim a genuine systems/testbed contribution alongside your method contribution (a released, documented, federated-partitioned benchmark is itself citable and valuable).</p>
+  <ol>
+    <li><b>Design a population of synthetic "IoT sites":</b> a smart-home gateway, a hospital IoT wing, a factory-floor IIoT segment, a smart-city sensor cluster — each with a realistic device mix and traffic profile.</li>
+    <li><b>Simulate or replay normal background traffic per site</b> using existing device-emulation tools or real captured benign traffic from the public datasets above, preserving realistic protocol distributions (MQTT, CoAP, Modbus, HTTP) per site type.</li>
+    <li><b>Inject attacks per site at controllable frequency, type, and stealth</b> drawn from the canonical attack families already present in the public datasets (DDoS/DoS, botnet/Mirai, reconnaissance, spoofing, injection, brute force), so each site has a different, realistic attack-type distribution — this is what makes the non-IID setting genuine rather than artificial.</li>
+    <li><b>Record full provenance for every flow:</b> which site, which device, which attack family (or "benign"), timestamp, and whether it is real or generator-synthesized — this provenance is exactly what lets you later separate "real minority-class recall" from "synthetic-sample-driven recall" in your ablations.</li>
+    <li><b>Release it properly if you want it to count as a dataset/testbed contribution:</b> host on a permanent archive (Zenodo, Figshare, IEEE DataPort — not just a personal GitHub, which can disappear), write a datasheet (see 10.6), and assign a DOI.</li>
+  </ol>
+
+  <h3>10.5 What makes a dataset/evaluation "acceptable" to a top-graded journal — checklist</h3>
+  <table>
+    <tr><th>Requirement</th><th>Why reviewers check for it</th></tr>
+    <tr><td>Multiple datasets, not one</td><td>A method that only works on one dataset is assumed to be overfit to that dataset's quirks; use at least two of CICIoT2023 / Edge-IIoTset / TON_IoT / BoT-IoT / N-BaIoT.</td></tr>
+    <tr><td>Genuine non-IID client partition, with a stated method</td><td>An FL paper evaluated only on an IID shuffle is not really testing federated learning's hard case; reviewers in this subfield check for this specifically.</td></tr>
+    <tr><td>Explicit class-imbalance reporting per client</td><td>Attack rates are typically under 5%, and vary per client; failing to report this, or reporting only aggregate accuracy, is an immediate red flag to experienced reviewers.</td></tr>
+    <tr><td>Stated, justified privacy budget</td><td>"We use differential privacy" with no (ε, δ) value and no accountant named is treated as an unsubstantiated claim, not a result.</td></tr>
+    <tr><td>Temporal + cross-client train/test split</td><td>Prevents information leakage from the future, or from one client's data appearing disguised in another's split — a near-universal requirement for this kind of work.</td></tr>
+    <tr><td>Ethical/legal statement</td><td>A short paragraph confirming no real personally-identifiable or proprietary network data was used without authorization, and that public datasets were used under their stated license.</td></tr>
+    <tr><td>Reproducibility package</td><td>Public code, exact dataset versions/download links/partition seeds, environment specification, privacy-accountant configuration, and (if releasing new data) a permanent DOI-backed archive.</td></tr>
+    <tr><td>License compliance</td><td>Check and state the license of every dataset used and cite each correctly in a Data Availability statement.</td></tr>
+  </table>
+
+  <h3>10.6 Minimal "datasheet" template to include with any dataset/partition you build</h3>
+  <pre><code>Dataset / Partition Name:
+Version / Date:
+Base Dataset(s) Used:        [e.g., CICIoT2023 + Edge-IIoTset]
+Partitioning Method:         [natural per-device, or Dirichlet(α=...), etc.]
+Number of Clients:
+Attack Types per Client:     [table, with real-sample counts pre-augmentation]
+Synthetic Augmentation:      [generator type, synthetic:real ratio per client]
+Illicit / Attack Rate:       [% per client, min–max range]
+Temporal Range:              [start–end]
+Train/Val/Test Split Rule:
+Privacy Budget Used:         [ε, δ, accountant, noise multiplier, clipping norm]
+Known Limitations:
+License:
+Access / DOI:
+Ethical Statement:           [no real PII/proprietary traffic; public or synthetic data only]
+</code></pre>
+
+  <h3>10.7 Fast-start recommendation</h3>
+  <div class="analogy">
+    <b class="tag">If you only do one thing from this section</b>
+    Start immediately with <b>CICIoT2023</b> (largest, most device-diverse, natural basis for a realistic non-IID partition) plus <b>N-BaIoT</b> (clean per-device shards, ideal for your first client-partitioning experiments and for stress-testing the generative-augmentation module on extreme botnet-class scarcity). Add <b>Edge-IIoTset</b> next since it was explicitly designed with FL in mind. Use <b>TON_IoT</b> or <b>RT-IoT2022</b> later as your cross-dataset generalization/robustness check once your method works. This combination is the fastest realistic path to a defensible, multi-dataset, genuinely non-IID evaluation section.
+  </div>
+</section>
+
+<!-- PART 11 -->
+<section id="part11">
+  <h2 class="section-title"><span class="num">11</span>Risks, Ethics &amp; Mitigations</h2>
+  <table>
+    <tr><th>Risk</th><th>Mitigation</th></tr>
+    <tr><td>A local generator could memorize and later leak rare real attack (or benign device-fingerprint) samples</td><td>Train generators under DP-SGD as well, or at minimum audit them with a membership-inference attack before trusting synthetic output as "safe"; report this audit explicitly in the paper.</td></tr>
+    <tr><td>Malicious clients could poison the shared model, or a poisoned generator could inject a backdoor via synthetic data</td><td>Discuss this explicitly as a threat model boundary; optionally add a robust-aggregation baseline (e.g., trimmed mean, Krum) as a bonus experiment and state clearly which attacks are in vs. out of scope.</td></tr>
+    <tr><td>Differential privacy noise could degrade detection of rare, high-severity attacks specifically</td><td>Report per-class (not just aggregate) recall as a function of the privacy budget ε, so the paper is transparent about exactly which attack types are most affected by the privacy-utility trade-off.</td></tr>
+    <tr><td>The method could be reverse-engineered by attackers to learn detection blind spots ("dual-use" concern)</td><td>Do not publish exact deployed thresholds or production feature sets; discuss this limitation explicitly in an Ethics/Broader-Impact section, standard practice in security-adjacent ML papers.</td></tr>
+    <tr><td>Class imbalance leading to misleading headline metrics</td><td>Always report AUPRC and per-class recall/precision at operational thresholds, never accuracy alone.</td></tr>
+    <tr><td>Synthetic data may not transfer to real-world attack behavior</td><td>Always validate synthetic-sample fidelity against real held-out attack samples, and report at least one real-data-only ablation alongside augmented results.</td></tr>
+    <tr><td>Data privacy, even with public/synthetic data</td><td>Never attempt to re-identify real devices/organizations from anonymized public datasets; use only data under its stated research license.</td></tr>
+  </table>
+</section>
+
+<!-- PART 12 -->
+<section id="part12">
+  <h2 class="section-title"><span class="num">12</span>Reading List (Foundational Papers)</h2>
+  <p>Read in roughly this order. Search each title on Google Scholar / arXiv to get the latest version.</p>
+  <ol>
+    <li>McMahan et al. — "Communication-Efficient Learning of Deep Networks from Decentralized Data" (introduces FedAvg — the FL foundation)</li>
+    <li>Li et al. — "Federated Optimization in Heterogeneous Networks" (FedProx — handling non-IID data)</li>
+    <li>Zhu, Xu, Liu &amp; Jin — "Federated Learning on Non-IID Data: A Survey"</li>
+    <li>Goodfellow et al. — "Generative Adversarial Networks" (GAN foundation)</li>
+    <li>Kingma &amp; Welling — "Auto-Encoding Variational Bayes" (VAE foundation)</li>
+    <li>Gulrajani et al. — "Improved Training of Wasserstein GANs" (WGAN-GP, a stable GAN variant well-suited to tabular/flow data)</li>
+    <li>Abadi et al. — "Deep Learning with Differential Privacy" (introduces DP-SGD, your core privacy mechanism)</li>
+    <li>Bonawitz et al. — "Practical Secure Aggregation for Privacy-Preserving Machine Learning"</li>
+    <li>Tabassum et al. — "FEDGAN-IDS: Privacy-Preserving IDS Using GAN and Federated Learning" (closest prior combination to extend)</li>
+    <li>Ferrag et al. — the Edge-IIoTset dataset paper (IEEE Access, 2022; explicitly designed for centralized and federated IDS evaluation)</li>
+    <li>Neto et al. — the CICIoT2023 dataset paper</li>
+    <li>Meidan et al. — the N-BaIoT dataset paper (BaIoT / N-BaIoT botnet detection)</li>
+    <li>Shokri, Stronati, Song &amp; Shmatikov — "Membership Inference Attacks Against Machine Learning Models" (your core privacy-audit method to adapt)</li>
+    <li>Vyas, Lin, Hwang &amp; Tripathi — "Privacy-Preserving Federated Learning for Intrusion Detection in IoT Environments: A Survey" (IEEE Access, 2024)</li>
+    <li>Any 2025–2026 survey titled roughly "Generative AI and Federated Learning for Intrusion Detection Systems" or "Federated Learning for IoT Intrusion Detection: A Survey" — search for the most recent one, this field moves fast and a current survey will map the newest gaps.</li>
+  </ol>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap" style="padding:0;">
+    Research roadmap generated for planning purposes — verify all cited datasets, licenses, and paper details directly before submission.
+    <br><a class="backtotop" href="#part1">↑ Back to top</a>
+  </div>
+</footer>
+
+</body>
+</html>
